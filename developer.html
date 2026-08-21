@@ -1,0 +1,2513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Siinaaf School Hub — Developer</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#2563eb;
+    --secondary:#7c3aed;
+    --dark:#0f172a;
+    --text:#334155;
+    --muted:#64748b;
+    --bg:#f1f5f9;
+    --white:#fff;
+    --border:#e2e8f0;
+    --danger:#dc2626;
+    --success:#16a34a;
+    --warning:#d97706;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+/* ================= LOGIN ================= */
+
+#developerLogin{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+
+    background:
+    radial-gradient(circle at 20% 20%,rgba(37,99,235,.25),transparent 30%),
+    radial-gradient(circle at 80% 80%,rgba(124,58,237,.25),transparent 30%),
+    #020617;
+}
+
+.loginBox{
+    width:100%;
+    max-width:400px;
+    background:white;
+    padding:32px;
+    border-radius:25px;
+    box-shadow:0 30px 90px rgba(0,0,0,.35);
+}
+
+.logo{
+    width:65px;
+    height:65px;
+    margin:0 auto 18px;
+    border-radius:18px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:white;
+    font-size:22px;
+    font-weight:900;
+
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+
+.loginBox h1{
+    text-align:center;
+    font-size:22px;
+    margin-bottom:7px;
+}
+
+.loginBox p{
+    text-align:center;
+    color:var(--muted);
+    font-size:11px;
+    margin-bottom:25px;
+}
+
+.input{
+    width:100%;
+    height:48px;
+    border:1px solid var(--border);
+    border-radius:11px;
+    padding:0 13px;
+    outline:none;
+    margin-bottom:12px;
+}
+
+.input:focus{
+    border-color:var(--primary);
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:12px 17px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btnPrimary{
+    width:100%;
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+
+.error{
+    display:none;
+    margin-top:10px;
+    padding:10px;
+    background:#fee2e2;
+    color:#b91c1c;
+    border-radius:9px;
+    text-align:center;
+    font-size:11px;
+}
+
+/* ================= APP ================= */
+
+#app{
+    display:none;
+}
+
+.topbar{
+    height:70px;
+    background:#020617;
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 5%;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.brandLogo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+    font-weight:900;
+}
+
+.brand h2{
+    font-size:15px;
+}
+
+.brand small{
+    display:block;
+    color:#94a3b8;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.logout{
+    background:#dc2626;
+    color:white;
+}
+
+/* ================= LAYOUT ================= */
+
+.layout{
+    max-width:1250px;
+    margin:auto;
+    padding:25px 5%;
+
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:20px;
+}
+
+.sidebar{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:15px;
+    height:max-content;
+    position:sticky;
+    top:90px;
+}
+
+.sideBtn{
+    width:100%;
+    text-align:left;
+    border:0;
+    background:white;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:5px;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:bold;
+    color:var(--text);
+}
+
+.sideBtn:hover,
+.sideBtn.active{
+    background:#eff6ff;
+    color:var(--primary);
+}
+
+/* ================= MAIN ================= */
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+}
+
+.heading{
+    margin-bottom:20px;
+}
+
+.heading h1{
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.heading p{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* ================= DASHBOARD ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+}
+
+.stat span{
+    font-size:23px;
+}
+
+.stat strong{
+    display:block;
+    font-size:25px;
+    margin-top:8px;
+}
+
+.stat small{
+    color:var(--muted);
+    font-size:9px;
+}
+
+/* ================= CARD ================= */
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:18px;
+}
+
+.card h2{
+    font-size:17px;
+    margin-bottom:17px;
+}
+
+/* ================= FORM ================= */
+
+.formGrid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.formGroup{
+    margin-bottom:12px;
+}
+
+.formGroup.full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    font-size:10px;
+    font-weight:bold;
+    color:#475569;
+    margin-bottom:6px;
+}
+
+select,
+input,
+textarea{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:11px;
+    outline:none;
+    font-family:inherit;
+    font-size:11px;
+}
+
+textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+select:focus,
+input:focus,
+textarea:focus{
+    border-color:var(--primary);
+}
+
+.actionRow{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.primary{
+    background:var(--primary);
+    color:white;
+}
+
+.green{
+    background:var(--success);
+    color:white;
+}
+
+.gray{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.red{
+    background:var(--danger);
+    color:white;
+}
+
+/* ================= QUESTION PARSER ================= */
+
+.parserHelp{
+    padding:13px;
+    border-radius:12px;
+    background:#eff6ff;
+    color:#1e40af;
+    font-size:10px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.preview{
+    display:none;
+    margin-top:15px;
+}
+
+.questionPreview{
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:15px;
+    margin-bottom:10px;
+    background:#f8fafc;
+}
+
+.questionPreview strong{
+    display:block;
+    margin-bottom:8px;
+}
+
+.option{
+    margin:4px 0;
+    font-size:11px;
+}
+
+/* ================= LIST ================= */
+
+.searchBox{
+    margin-bottom:15px;
+}
+
+.item{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:10px;
+    background:white;
+}
+
+.itemTop{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.itemTitle{
+    font-weight:bold;
+    font-size:12px;
+}
+
+.badge{
+    padding:5px 8px;
+    border-radius:20px;
+    background:#eff6ff;
+    color:var(--primary);
+    font-size:8px;
+    height:max-content;
+}
+
+.itemText{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.6;
+    margin-top:8px;
+}
+
+.itemActions{
+    display:flex;
+    gap:6px;
+    margin-top:10px;
+}
+
+.smallBtn{
+    border:0;
+    border-radius:7px;
+    padding:7px 10px;
+    cursor:pointer;
+    font-size:9px;
+    font-weight:bold;
+}
+
+/* ================= TOAST ================= */
+
+#toast{
+    position:fixed;
+    right:20px;
+    bottom:20px;
+    z-index:10000;
+
+    display:none;
+
+    color:white;
+    background:#0f172a;
+
+    padding:13px 17px;
+    border-radius:11px;
+
+    font-size:10px;
+
+    box-shadow:0 15px 40px rgba(0,0,0,.2);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:900px){
+
+    .layout{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        position:static;
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:5px;
+    }
+
+    .sideBtn{
+        margin:0;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .topbar{
+        padding:0 4%;
+    }
+
+    .brand h2{
+        font-size:12px;
+    }
+
+    .layout{
+        padding:18px 4%;
+    }
+
+    .sidebar{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .formGrid{
+        grid-template-columns:1fr;
+    }
+
+    .formGroup.full{
+        grid-column:auto;
+    }
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .heading h1{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     DEVELOPER LOGIN
+===================================================== -->
+
+<div id="developerLogin">
+
+    <div class="loginBox">
+
+        <div class="logo">
+            AS
+        </div>
+
+        <h1>
+            Developer Dashboard
+        </h1>
+
+        <p>
+            Siinaaf School Hub Content Management
+        </p>
+
+        <input
+            id="developerPassword"
+            class="input"
+            type="password"
+            placeholder="Enter developer password"
+        >
+
+        <button
+            class="btn btnPrimary"
+            onclick="developerLogin()"
+        >
+            🔐 ENTER DASHBOARD
+        </button>
+
+        <div
+            id="loginError"
+            class="error"
+        >
+            Incorrect developer password.
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     APPLICATION
+===================================================== -->
+
+<div id="app">
+
+    <header class="topbar">
+
+        <div class="brand">
+
+            <div class="brandLogo">
+                S³
+            </div>
+
+            <div>
+                <h2>
+                    Siinaaf School Hub
+                </h2>
+
+                <small>
+                    Developer Panel
+                </small>
+            </div>
+
+        </div>
+
+        <button
+            class="btn logout"
+            onclick="logoutDeveloper()"
+        >
+            Logout
+        </button>
+
+    </header>
+
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <button
+                class="sideBtn active"
+                onclick="showPage('dashboard',this)"
+            >
+                📊 Dashboard
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('addQuestion',this)"
+            >
+                ❓ Add Questions
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('addNote',this)"
+            >
+                📝 Add Notes
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('addImage',this)"
+            >
+                🖼️ Add Image
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('manageQuestions',this)"
+            >
+                📚 Manage Questions
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('manageNotes',this)"
+            >
+                📖 Manage Notes
+            </button>
+
+            <button
+                class="sideBtn"
+                onclick="showPage('manageImages',this)"
+            >
+                🖼️ Manage Images
+            </button>
+
+        </aside>
+
+
+        <main>
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================= -->
+
+            <section
+                id="dashboard"
+                class="page active"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        Developer Dashboard
+                    </h1>
+
+                    <p>
+                        Manage all educational content from one place.
+                    </p>
+
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat">
+                        <span>❓</span>
+                        <strong id="questionCount">0</strong>
+                        <small>Questions</small>
+                    </div>
+
+                    <div class="stat">
+                        <span>📝</span>
+                        <strong id="noteCount">0</strong>
+                        <small>Notes</small>
+                    </div>
+
+                    <div class="stat">
+                        <span>🖼️</span>
+                        <strong id="imageCount">0</strong>
+                        <small>Images</small>
+                    </div>
+
+                    <div class="stat">
+                        <span>📦</span>
+                        <strong id="totalCount">0</strong>
+                        <small>Total Content</small>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h2>
+                        ⚡ Quick Actions
+                    </h2>
+
+                    <div class="actionRow">
+
+                        <button
+                            class="btn primary"
+                            onclick="openPageById('addQuestion')"
+                        >
+                            + Add Questions
+                        </button>
+
+                        <button
+                            class="btn green"
+                            onclick="openPageById('addNote')"
+                        >
+                            + Add Note
+                        </button>
+
+                        <button
+                            class="btn gray"
+                            onclick="openPageById('addImage')"
+                        >
+                            + Add Image
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h2>
+                        💾 Storage
+                    </h2>
+
+                    <p style="font-size:11px;color:#64748b;line-height:1.7;">
+                        Your developer content is currently stored in the
+                        browser's localStorage. This means the content will
+                        remain available on this browser/device until the
+                        browser data is cleared.
+                    </p>
+
+                    <br>
+
+                    <button
+                        class="btn red"
+                        onclick="clearAllContent()"
+                    >
+                        ⚠️ Delete All Content
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ADD QUESTION
+            ================================================= -->
+
+            <section
+                id="addQuestion"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        ❓ Add Questions
+                    </h1>
+
+                    <p>
+                        Copy and paste multiple questions. The system
+                        will automatically separate them.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="parserHelp">
+
+                        <strong>📌 Recommended format:</strong><br><br>
+
+                        1. What is the basic unit of life?<br>
+                        A. Tissue<br>
+                        B. Cell<br>
+                        C. Organ<br>
+                        D. Atom<br>
+                        Answer: B<br><br>
+
+                        2. Which organ pumps blood?<br>
+                        A. Lung<br>
+                        B. Kidney<br>
+                        C. Heart<br>
+                        D. Liver<br>
+                        Answer: C
+
+                    </div>
+
+
+                    <div class="formGrid">
+
+                        <div class="formGroup">
+
+                            <label>
+                                Subject
+                            </label>
+
+                            <select id="questionSubject">
+
+                                <option value="">
+                                    Select Subject
+                                </option>
+
+                                <option>Biology</option>
+                                <option>Chemistry</option>
+                                <option>Physics</option>
+                                <option>Mathematics</option>
+                                <option>English</option>
+                                <option>General</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label>
+                                Chapter / Unit
+                            </label>
+
+                            <input
+                                id="questionChapter"
+                                placeholder="Example: Unit 1 — Cell Biology"
+                            >
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label>
+                                Difficulty
+                            </label>
+
+                            <select id="questionDifficulty">
+
+                                <option>Easy</option>
+                                <option selected>Medium</option>
+                                <option>Hard</option>
+                                <option>Entrance Exam</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label>
+                                Question Type
+                            </label>
+
+                            <select id="questionType">
+
+                                <option value="MCQ">
+                                    Multiple Choice
+                                </option>
+
+                                <option value="True/False">
+                                    True / False
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="formGroup full">
+
+                            <label>
+                                Paste Questions Here
+                            </label>
+
+                            <textarea
+                                id="questionInput"
+                                placeholder="Paste your questions here..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="actionRow">
+
+                        <button
+                            class="btn primary"
+                            onclick="parseQuestions()"
+                        >
+                            🔍 Preview & Separate
+                        </button>
+
+                        <button
+                            class="btn gray"
+                            onclick="document.getElementById('questionInput').value=''"
+                        >
+                            Clear
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        id="questionPreview"
+                        class="preview"
+                    >
+
+                        <h3 style="font-size:14px;margin-bottom:12px;">
+                            Preview
+                        </h3>
+
+                        <div id="previewContainer"></div>
+
+                        <button
+                            class="btn green"
+                            onclick="saveParsedQuestions()"
+                        >
+                            💾 Save All Questions
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ADD NOTE
+            ================================================= -->
+
+            <section
+                id="addNote"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        📝 Add Note
+                    </h1>
+
+                    <p>
+                        Add study notes for students.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="formGrid">
+
+                        <div class="formGroup">
+
+                            <label>
+                                Subject
+                            </label>
+
+                            <select id="noteSubject">
+
+                                <option value="">
+                                    Select Subject
+                                </option>
+
+                                <option>Biology</option>
+                                <option>Chemistry</option>
+                                <option>Physics</option>
+                                <option>Mathematics</option>
+                                <option>English</option>
+                                <option>General</option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="formGroup">
+
+                            <label>
+                                Chapter / Unit
+                            </label>
+
+                            <input
+                                id="noteChapter"
+                                placeholder="Example: Unit 2 — Plants"
+                            >
+
+                        </div>
+
+
+                        <div class="formGroup full">
+
+                            <label>
+                                Note Title
+                            </label>
+
+                            <input
+                                id="noteTitle"
+                                placeholder="Example: Photosynthesis"
+                            >
+
+                        </div>
+
+
+                        <div class="formGroup full">
+
+                            <label>
+                                Note Content
+                            </label>
+
+                            <textarea
+                                id="noteContent"
+                                placeholder="Write or paste your note here..."
+                            ></textarea>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="btn green"
+                        onclick="saveNote()"
+                    >
+                        💾 Save Note
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ADD IMAGE
+            ================================================= -->
+
+            <section
+                id="addImage"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        🖼️ Add Image
+                    </h1>
+
+                    <p>
+                        Add educational images to your gallery.
+                    </p>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="formGroup">
+
+                        <label>
+                            Image Title
+                        </label>
+
+                        <input
+                            id="imageTitle"
+                            placeholder="Example: Human Heart"
+                        >
+
+                    </div>
+
+
+                    <div class="formGroup">
+
+                        <label>
+                            Subject
+                        </label>
+
+                        <select id="imageSubject">
+
+                            <option>General</option>
+                            <option>Biology</option>
+                            <option>Chemistry</option>
+                            <option>Physics</option>
+                            <option>Mathematics</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="formGroup">
+
+                        <label>
+                            Image URL
+                        </label>
+
+                        <input
+                            id="imageURL"
+                            placeholder="https://example.com/image.jpg"
+                        >
+
+                    </div>
+
+
+                    <button
+                        class="btn green"
+                        onclick="saveImage()"
+                    >
+                        🖼️ Save Image
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MANAGE QUESTIONS
+            ================================================= -->
+
+            <section
+                id="manageQuestions"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        📚 Manage Questions
+                    </h1>
+
+                    <p>
+                        View and delete saved questions.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <input
+                        class="searchBox"
+                        id="questionSearch"
+                        placeholder="Search questions..."
+                        oninput="renderQuestions()"
+                    >
+
+                    <div id="questionList"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MANAGE NOTES
+            ================================================= -->
+
+            <section
+                id="manageNotes"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        📖 Manage Notes
+                    </h1>
+
+                    <p>
+                        View and delete saved notes.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <input
+                        class="searchBox"
+                        id="noteSearch"
+                        placeholder="Search notes..."
+                        oninput="renderNotes()"
+                    >
+
+                    <div id="noteList"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MANAGE IMAGES
+            ================================================= -->
+
+            <section
+                id="manageImages"
+                class="page"
+            >
+
+                <div class="heading">
+
+                    <h1>
+                        🖼️ Manage Images
+                    </h1>
+
+                    <p>
+                        View and delete gallery images.
+                    </p>
+
+                </div>
+
+                <div class="card">
+
+                    <div id="imageList"></div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<script>
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const QUESTION_KEY =
+    "siinaaf_questions";
+
+const NOTE_KEY =
+    "siinaaf_notes";
+
+const IMAGE_KEY =
+    "siinaaf_images";
+
+
+function getQuestions(){
+
+    return JSON.parse(
+        localStorage.getItem(QUESTION_KEY) || "[]"
+    );
+
+}
+
+
+function getNotes(){
+
+    return JSON.parse(
+        localStorage.getItem(NOTE_KEY) || "[]"
+    );
+
+}
+
+
+function getImages(){
+
+    return JSON.parse(
+        localStorage.getItem(IMAGE_KEY) || "[]"
+    );
+
+}
+
+
+/* =====================================================
+   DEVELOPER LOGIN
+===================================================== */
+
+function developerLogin(){
+
+    const password =
+        document
+        .getElementById("developerPassword")
+        .value;
+
+    if(password === "1996"){
+
+        sessionStorage.setItem(
+            "siinaafDeveloper",
+            "true"
+        );
+
+        document
+        .getElementById("developerLogin")
+        .style.display = "none";
+
+        document
+        .getElementById("app")
+        .style.display = "block";
+
+        updateDashboard();
+
+    }else{
+
+        document
+        .getElementById("loginError")
+        .style.display = "block";
+
+    }
+
+}
+
+
+function logoutDeveloper(){
+
+    sessionStorage.removeItem(
+        "siinaafDeveloper"
+    );
+
+    location.reload();
+
+}
+
+
+document
+.getElementById("developerPassword")
+.addEventListener(
+    "keydown",
+    function(e){
+
+        if(e.key === "Enter"){
+            developerLogin();
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function showPage(pageId,button){
+
+    document
+    .querySelectorAll(".page")
+    .forEach(
+        page => page.classList.remove("active")
+    );
+
+    document
+    .getElementById(pageId)
+    .classList.add("active");
+
+
+    document
+    .querySelectorAll(".sideBtn")
+    .forEach(
+        btn => btn.classList.remove("active")
+    );
+
+
+    if(button){
+        button.classList.add("active");
+    }
+
+
+    if(pageId === "manageQuestions"){
+        renderQuestions();
+    }
+
+    if(pageId === "manageNotes"){
+        renderNotes();
+    }
+
+    if(pageId === "manageImages"){
+        renderImages();
+    }
+
+}
+
+
+function openPageById(pageId){
+
+    const buttons =
+        document.querySelectorAll(".sideBtn");
+
+    buttons.forEach(
+        button => {
+
+            if(
+                button
+                .getAttribute("onclick")
+                ?.includes("'" + pageId + "'")
+            ){
+
+                showPage(pageId,button);
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   QUESTION PARSER
+===================================================== */
+
+let parsedQuestions = [];
+
+
+function parseQuestions(){
+
+    const subject =
+        document
+        .getElementById("questionSubject")
+        .value;
+
+    const chapter =
+        document
+        .getElementById("questionChapter")
+        .value.trim();
+
+    const difficulty =
+        document
+        .getElementById("questionDifficulty")
+        .value;
+
+    const type =
+        document
+        .getElementById("questionType")
+        .value;
+
+    const raw =
+        document
+        .getElementById("questionInput")
+        .value
+        .trim();
+
+
+    if(!subject){
+
+        showToast("Please select a subject.");
+        return;
+
+    }
+
+    if(!raw){
+
+        showToast("Paste questions first.");
+        return;
+
+    }
+
+
+    /*
+       Detect questions beginning with:
+       1.
+       2)
+       3 -
+       Question 1:
+       etc.
+    */
+
+    let blocks =
+        raw
+        .split(
+            /\n(?=\s*(?:\d+\s*[\.\)\-:]|Question\s*\d+\s*[:\-]?))/i
+        )
+        .map(
+            x => x.trim()
+        )
+        .filter(Boolean);
+
+
+    /*
+       If automatic separation did not work,
+       try blank-line separation.
+    */
+
+    if(blocks.length === 1){
+
+        const blankBlocks =
+            raw
+            .split(/\n\s*\n/)
+            .map(x => x.trim())
+            .filter(Boolean);
+
+        if(blankBlocks.length > 1){
+            blocks = blankBlocks;
+        }
+
+    }
+
+
+    parsedQuestions = [];
+
+
+    blocks.forEach(
+        (block,index) => {
+
+            let clean =
+                block.replace(
+                    /^\s*(?:\d+\s*[\.\)\-:]|Question\s*\d+\s*[:\-]?)\s*/i,
+                    ""
+                );
+
+
+            let answerMatch =
+                clean.match(
+                    /(?:Answer|Ans|Correct\s*Answer)\s*[:\-]\s*([A-D])/i
+                );
+
+
+            let answer =
+                answerMatch
+                ? answerMatch[1].toUpperCase()
+                : "";
+
+
+            clean =
+                clean.replace(
+                    /(?:Answer|Ans|Correct\s*Answer)\s*[:\-]\s*[A-D]\s*$/i,
+                    ""
+                ).trim();
+
+
+            let lines =
+                clean
+                .split(/\n/)
+                .map(x => x.trim())
+                .filter(Boolean);
+
+
+            let questionLines = [];
+            let options = [];
+
+
+            lines.forEach(
+                line => {
+
+                    if(
+                        /^[A-D][\.\)\:\-]\s*/i.test(line)
+                    ){
+
+                        options.push(
+                            line.replace(
+                                /^[A-D][\.\)\:\-]\s*/i,
+                                ""
+                            ).trim()
+                        );
+
+                    }else{
+
+                        questionLines.push(line);
+
+                    }
+
+                }
+            );
+
+
+            const question =
+                questionLines.join(" ").trim();
+
+
+            if(question){
+
+                parsedQuestions.push({
+
+                    id:
+                        Date.now() +
+                        index,
+
+                    subject:subject,
+
+                    chapter:chapter,
+
+                    difficulty:difficulty,
+
+                    type:type,
+
+                    question:question,
+
+                    options:options,
+
+                    answer:answer,
+
+                    createdAt:
+                        new Date().toISOString()
+
+                });
+
+            }
+
+        }
+    );
+
+
+    renderPreview();
+
+}
+
+
+/* =====================================================
+   QUESTION PREVIEW
+===================================================== */
+
+function renderPreview(){
+
+    const container =
+        document.getElementById(
+            "previewContainer"
+        );
+
+    container.innerHTML = "";
+
+
+    if(parsedQuestions.length === 0){
+
+        container.innerHTML =
+            "<p style='font-size:11px;color:#dc2626;'>No questions detected.</p>";
+
+        document
+        .getElementById("questionPreview")
+        .style.display = "block";
+
+        return;
+
+    }
+
+
+    parsedQuestions.forEach(
+        (q,index) => {
+
+            let html = "";
+
+            html += `
+                <div class="questionPreview">
+
+                    <strong>
+                        ${index + 1}. ${escapeHTML(q.question)}
+                    </strong>
+            `;
+
+
+            q.options.forEach(
+                (option,i) => {
+
+                    html += `
+                        <div class="option">
+                            ${String.fromCharCode(65+i)}.
+                            ${escapeHTML(option)}
+                        </div>
+                    `;
+
+                }
+            );
+
+
+            html += `
+
+                <div style="
+                    margin-top:8px;
+                    font-size:9px;
+                    color:#64748b;
+                ">
+                    Answer:
+                    ${q.answer || "Not specified"}
+                </div>
+
+                </div>
+
+            `;
+
+
+            container.innerHTML += html;
+
+        }
+    );
+
+
+    document
+    .getElementById("questionPreview")
+    .style.display = "block";
+
+}
+
+
+/* =====================================================
+   SAVE QUESTIONS
+===================================================== */
+
+function saveParsedQuestions(){
+
+    if(parsedQuestions.length === 0){
+
+        showToast("No questions to save.");
+        return;
+
+    }
+
+
+    const questions =
+        getQuestions();
+
+
+    questions.push(
+        ...parsedQuestions
+    );
+
+
+    localStorage.setItem(
+        QUESTION_KEY,
+        JSON.stringify(questions)
+    );
+
+
+    showToast(
+        parsedQuestions.length +
+        " question(s) saved successfully."
+    );
+
+
+    document
+    .getElementById("questionInput")
+    .value = "";
+
+    document
+    .getElementById("questionPreview")
+    .style.display = "none";
+
+    parsedQuestions = [];
+
+
+    updateDashboard();
+
+}
+
+
+/* =====================================================
+   SAVE NOTE
+===================================================== */
+
+function saveNote(){
+
+    const subject =
+        document
+        .getElementById("noteSubject")
+        .value;
+
+    const chapter =
+        document
+        .getElementById("noteChapter")
+        .value.trim();
+
+    const title =
+        document
+        .getElementById("noteTitle")
+        .value.trim();
+
+    const content =
+        document
+        .getElementById("noteContent")
+        .value.trim();
+
+
+    if(!subject || !title || !content){
+
+        showToast(
+            "Subject, title and content are required."
+        );
+
+        return;
+
+    }
+
+
+    const notes =
+        getNotes();
+
+
+    notes.push({
+
+        id:Date.now(),
+
+        subject:subject,
+
+        chapter:chapter,
+
+        title:title,
+
+        content:content,
+
+        createdAt:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        NOTE_KEY,
+        JSON.stringify(notes)
+    );
+
+
+    showToast(
+        "Note saved successfully."
+    );
+
+
+    document
+    .getElementById("noteTitle")
+    .value = "";
+
+    document
+    .getElementById("noteChapter")
+    .value = "";
+
+    document
+    .getElementById("noteContent")
+    .value = "";
+
+
+    updateDashboard();
+
+}
+
+
+/* =====================================================
+   SAVE IMAGE
+===================================================== */
+
+function saveImage(){
+
+    const title =
+        document
+        .getElementById("imageTitle")
+        .value.trim();
+
+    const subject =
+        document
+        .getElementById("imageSubject")
+        .value;
+
+    const url =
+        document
+        .getElementById("imageURL")
+        .value.trim();
+
+
+    if(!title || !url){
+
+        showToast(
+            "Image title and URL are required."
+        );
+
+        return;
+
+    }
+
+
+    const images =
+        getImages();
+
+
+    images.push({
+
+        id:Date.now(),
+
+        title:title,
+
+        subject:subject,
+
+        url:url,
+
+        createdAt:
+            new Date().toISOString()
+
+    });
+
+
+    localStorage.setItem(
+        IMAGE_KEY,
+        JSON.stringify(images)
+    );
+
+
+    showToast(
+        "Image saved successfully."
+    );
+
+
+    document
+    .getElementById("imageTitle")
+    .value = "";
+
+    document
+    .getElementById("imageURL")
+    .value = "";
+
+
+    updateDashboard();
+
+}
+
+
+/* =====================================================
+   RENDER QUESTIONS
+===================================================== */
+
+function renderQuestions(){
+
+    const list =
+        document.getElementById(
+            "questionList"
+        );
+
+    const search =
+        (
+            document
+            .getElementById("questionSearch")
+            ?.value || ""
+        )
+        .toLowerCase();
+
+
+    const questions =
+        getQuestions()
+        .filter(
+            q =>
+                q.question
+                .toLowerCase()
+                .includes(search) ||
+                q.subject
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    list.innerHTML = "";
+
+
+    if(questions.length === 0){
+
+        list.innerHTML =
+            "<p style='font-size:11px;color:#64748b;'>No questions found.</p>";
+
+        return;
+
+    }
+
+
+    questions
+    .slice()
+    .reverse()
+    .forEach(
+        q => {
+
+            let options = "";
+
+            q.options.forEach(
+                (o,i) => {
+
+                    options +=
+                        `<div>${String.fromCharCode(65+i)}. ${escapeHTML(o)}</div>`;
+
+                }
+            );
+
+
+            list.innerHTML += `
+
+                <div class="item">
+
+                    <div class="itemTop">
+
+                        <div class="itemTitle">
+                            ${escapeHTML(q.question)}
+                        </div>
+
+                        <span class="badge">
+                            ${escapeHTML(q.subject)}
+                        </span>
+
+                    </div>
+
+                    <div class="itemText">
+
+                        ${options}
+
+                        <br>
+
+                        <strong>
+                            Answer:
+                        </strong>
+
+                        ${q.answer || "Not specified"}
+
+                        <br>
+
+                        ${escapeHTML(q.chapter || "")}
+
+                    </div>
+
+                    <div class="itemActions">
+
+                        <button
+                            class="smallBtn red"
+                            onclick="deleteQuestion(${q.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER NOTES
+===================================================== */
+
+function renderNotes(){
+
+    const list =
+        document.getElementById(
+            "noteList"
+        );
+
+    const search =
+        (
+            document
+            .getElementById("noteSearch")
+            ?.value || ""
+        )
+        .toLowerCase();
+
+
+    const notes =
+        getNotes()
+        .filter(
+            n =>
+                n.title
+                .toLowerCase()
+                .includes(search) ||
+                n.subject
+                .toLowerCase()
+                .includes(search)
+        );
+
+
+    list.innerHTML = "";
+
+
+    if(notes.length === 0){
+
+        list.innerHTML =
+            "<p style='font-size:11px;color:#64748b;'>No notes found.</p>";
+
+        return;
+
+    }
+
+
+    notes
+    .slice()
+    .reverse()
+    .forEach(
+        n => {
+
+            list.innerHTML += `
+
+                <div class="item">
+
+                    <div class="itemTop">
+
+                        <div class="itemTitle">
+                            ${escapeHTML(n.title)}
+                        </div>
+
+                        <span class="badge">
+                            ${escapeHTML(n.subject)}
+                        </span>
+
+                    </div>
+
+                    <div class="itemText">
+
+                        ${escapeHTML(n.chapter || "")}
+
+                        <br><br>
+
+                        ${escapeHTML(
+                            n.content.substring(0,300)
+                        )}
+
+                        ${n.content.length > 300 ? "..." : ""}
+
+                    </div>
+
+                    <div class="itemActions">
+
+                        <button
+                            class="smallBtn red"
+                            onclick="deleteNote(${n.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   RENDER IMAGES
+===================================================== */
+
+function renderImages(){
+
+    const list =
+        document.getElementById(
+            "imageList"
+        );
+
+    const images =
+        getImages();
+
+
+    list.innerHTML = "";
+
+
+    if(images.length === 0){
+
+        list.innerHTML =
+            "<p style='font-size:11px;color:#64748b;'>No images found.</p>";
+
+        return;
+
+    }
+
+
+    images
+    .slice()
+    .reverse()
+    .forEach(
+        image => {
+
+            list.innerHTML += `
+
+                <div class="item">
+
+                    <div class="itemTop">
+
+                        <div class="itemTitle">
+                            ${escapeHTML(image.title)}
+                        </div>
+
+                        <span class="badge">
+                            ${escapeHTML(image.subject)}
+                        </span>
+
+                    </div>
+
+                    <div style="margin-top:10px;">
+
+                        <img
+                            src="${escapeHTML(image.url)}"
+                            alt="${escapeHTML(image.title)}"
+                            style="
+                                width:100%;
+                                max-height:220px;
+                                object-fit:cover;
+                                border-radius:10px;
+                            "
+                            onerror="this.style.display='none'"
+                        >
+
+                    </div>
+
+                    <div class="itemActions">
+
+                        <button
+                            class="smallBtn red"
+                            onclick="deleteImage(${image.id})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteQuestion(id){
+
+    if(!confirm("Delete this question?")){
+        return;
+    }
+
+
+    const questions =
+        getQuestions()
+        .filter(q => q.id !== id);
+
+
+    localStorage.setItem(
+        QUESTION_KEY,
+        JSON.stringify(questions)
+    );
+
+
+    renderQuestions();
+    updateDashboard();
+
+    showToast("Question deleted.");
+
+}
+
+
+function deleteNote(id){
+
+    if(!confirm("Delete this note?")){
+        return;
+    }
+
+
+    const notes =
+        getNotes()
+        .filter(n => n.id !== id);
+
+
+    localStorage.setItem(
+        NOTE_KEY,
+        JSON.stringify(notes)
+    );
+
+
+    renderNotes();
+    updateDashboard();
+
+    showToast("Note deleted.");
+
+}
+
+
+function deleteImage(id){
+
+    if(!confirm("Delete this image?")){
+        return;
+    }
+
+
+    const images =
+        getImages()
+        .filter(i => i.id !== id);
+
+
+    localStorage.setItem(
+        IMAGE_KEY,
+        JSON.stringify(images)
+    );
+
+
+    renderImages();
+    updateDashboard();
+
+    showToast("Image deleted.");
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+    const questions =
+        getQuestions();
+
+    const notes =
+        getNotes();
+
+    const images =
+        getImages();
+
+
+    document
+    .getElementById("questionCount")
+    .textContent =
+        questions.length;
+
+
+    document
+    .getElementById("noteCount")
+    .textContent =
+        notes.length;
+
+
+    document
+    .getElementById("imageCount")
+    .textContent =
+        images.length;
+
+
+    document
+    .getElementById("totalCount")
+    .textContent =
+        questions.length +
+        notes.length +
+        images.length;
+
+}
+
+
+/* =====================================================
+   DELETE EVERYTHING
+===================================================== */
+
+function clearAllContent(){
+
+    const confirmDelete =
+        confirm(
+            "WARNING!\n\nThis will delete ALL questions, notes and images.\n\nContinue?"
+        );
+
+
+    if(!confirmDelete){
+        return;
+    }
+
+
+    localStorage.removeItem(
+        QUESTION_KEY
+    );
+
+    localStorage.removeItem(
+        NOTE_KEY
+    );
+
+    localStorage.removeItem(
+        IMAGE_KEY
+    );
+
+
+    updateDashboard();
+
+    renderQuestions();
+    renderNotes();
+    renderImages();
+
+    showToast(
+        "All content deleted."
+    );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function showToast(message){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent =
+        message;
+
+    toast.style.display =
+        "block";
+
+
+    setTimeout(
+        () => {
+
+            toast.style.display =
+                "none";
+
+        },
+        2500
+    );
+
+}
+
+
+/* =====================================================
+   SECURITY / HTML ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+    return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+if(
+    sessionStorage.getItem(
+        "siinaafDeveloper"
+    ) === "true"
+){
+
+    document
+    .getElementById("developerLogin")
+    .style.display = "none";
+
+    document
+    .getElementById("app")
+    .style.display = "block";
+
+    updateDashboard();
+
+}
+
+</script>
+
+</body>
+</html>
