@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AS MODEL • Study Notes</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#2563eb;
+    --secondary:#7c3aed;
+    --dark:#0f172a;
+    --muted:#64748b;
+    --bg:#f1f5f9;
+    --white:#fff;
+    --border:#e2e8f0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--dark);
+}
+
+.header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    height:68px;
+    padding:0 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logoBox{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:900;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+
+.logo h2{
+    font-size:15px;
+}
+
+.logo span{
+    display:block;
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.back{
+    border:0;
+    padding:10px 14px;
+    border-radius:10px;
+    background:#e2e8f0;
+    cursor:pointer;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.container{
+    width:92%;
+    max-width:1100px;
+    margin:30px auto;
+}
+
+.title{
+    margin-bottom:25px;
+}
+
+.title h1{
+    font-size:30px;
+    margin-bottom:7px;
+}
+
+.title p{
+    color:var(--muted);
+    font-size:11px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:190px 1fr;
+    gap:10px;
+    margin-bottom:22px;
+}
+
+.filters select,
+.filters input{
+    height:45px;
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:0 12px;
+    outline:none;
+    background:white;
+    font-size:11px;
+}
+
+.noteGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.noteCard{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    padding:20px;
+    transition:.2s;
+}
+
+.noteCard:hover{
+    transform:translateY(-4px);
+    box-shadow:0 12px 30px rgba(15,23,42,.07);
+}
+
+.noteIcon{
+    width:45px;
+    height:45px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    background:#eff6ff;
+    font-size:21px;
+    margin-bottom:14px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    background:#eff6ff;
+    color:var(--primary);
+    font-size:8px;
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+.noteCard h3{
+    font-size:14px;
+    margin-bottom:8px;
+}
+
+.noteCard p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.7;
+    margin-bottom:15px;
+}
+
+.buttons{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:9px 12px;
+    cursor:pointer;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.primary{
+    color:white;
+    background:linear-gradient(135deg,var(--primary),var(--secondary));
+}
+
+.secondary{
+    background:#e2e8f0;
+    color:var(--dark);
+}
+
+.empty{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:17px;
+    text-align:center;
+    padding:60px 20px;
+}
+
+.empty div{
+    font-size:40px;
+    margin-bottom:12px;
+}
+
+.empty h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.empty p{
+    color:var(--muted);
+    font-size:10px;
+    line-height:1.7;
+}
+
+.count{
+    color:var(--muted);
+    font-size:10px;
+    margin-bottom:15px;
+}
+
+@media(max-width:800px){
+    .noteGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .noteGrid{
+        grid-template-columns:1fr;
+    }
+
+    .title h1{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="logo">
+
+        <div class="logoBox">
+            AS
+        </div>
+
+        <div>
+            <h2>AS MODEL</h2>
+            <span>Digital Study Notes</span>
+        </div>
+
+    </div>
+
+    <button
+        class="back"
+        onclick="location.href='index.html'"
+    >
+        ← Home
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <section class="title">
+
+        <h1>
+            📚 Study Notes
+        </h1>
+
+        <p>
+            Select a subject and access your learning materials.
+        </p>
+
+    </section>
+
+
+    <section class="filters">
+
+        <select
+            id="subject"
+            onchange="renderNotes()"
+        >
+
+            <option value="All">
+                All Subjects
+            </option>
+
+            <option value="Biology">
+                Biology
+            </option>
+
+            <option value="Chemistry">
+                Chemistry
+            </option>
+
+            <option value="Physics">
+                Physics
+            </option>
+
+            <option value="Mathematics">
+                Mathematics
+            </option>
+
+            <option value="English">
+                English
+            </option>
+
+        </select>
+
+
+        <input
+            id="search"
+            type="search"
+            placeholder="🔎 Search notes..."
+            oninput="renderNotes()"
+        >
+
+    </section>
+
+
+    <div
+        class="count"
+        id="count"
+    ></div>
+
+
+    <section id="notesArea"></section>
+
+</main>
+
+
+<script>
+
+/* =================================
+   LOAD NOTES
+================================= */
+
+let notes =
+    JSON.parse(
+        localStorage.getItem(
+            "AS_MODEL_NOTES"
+        )
+    ) || [];
+
+
+/*
+    Example note format:
+
+    {
+        id: 1,
+        subject: "Biology",
+        title: "Cell Biology",
+        description: "Grade 12 Biology note",
+        content: "...",
+        file: "",
+        link: ""
+    }
+*/
+
+
+/* =================================
+   RENDER
+================================= */
+
+function renderNotes(){
+
+    const area =
+        document.getElementById(
+            "notesArea"
+        );
+
+    const subject =
+        document.getElementById(
+            "subject"
+        ).value;
+
+    const search =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filtered =
+        notes.filter(
+            function(note){
+
+                const subjectMatch =
+                    subject === "All" ||
+                    note.subject === subject;
+
+                const searchMatch =
+                    !search ||
+                    String(note.title || "")
+                    .toLowerCase()
+                    .includes(search) ||
+
+                    String(note.description || "")
+                    .toLowerCase()
+                    .includes(search);
+
+                return (
+                    subjectMatch &&
+                    searchMatch
+                );
+
+            }
+        );
+
+
+    document.getElementById(
+        "count"
+    ).textContent =
+        filtered.length +
+        " note(s) available";
+
+
+    if(filtered.length === 0){
+
+        area.innerHTML = `
+
+            <div class="empty">
+
+                <div>📭</div>
+
+                <h2>
+                    No Notes Available
+                </h2>
+
+                <p>
+                    No study notes match your search.
+                    <br>
+                    Notes can be added from the Developer Dashboard.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    area.innerHTML = `
+
+        <div class="noteGrid">
+
+            ${filtered.map(
+                function(note){
+
+                    return `
+
+                        <article class="noteCard">
+
+                            <div class="noteIcon">
+                                📖
+                            </div>
+
+                            <span class="badge">
+                                ${escapeHTML(note.subject)}
+                            </span>
+
+                            <h3>
+                                ${escapeHTML(note.title)}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    note.description || ""
+                                )}
+                            </p>
+
+                            <div class="buttons">
+
+                                ${
+                                    note.content
+                                    ?
+                                    `
+                                    <button
+                                        class="btn primary"
+                                        onclick="readNote(${note.id})"
+                                    >
+                                        📖 Read
+                                    </button>
+                                    `
+                                    :
+                                    ""
+                                }
+
+                                ${
+                                    note.file
+                                    ?
+                                    `
+                                    <button
+                                        class="btn secondary"
+                                        onclick="openFile('${encodeURIComponent(note.file)}')"
+                                    >
+                                        📄 PDF
+                                    </button>
+                                    `
+                                    :
+                                    ""
+                                }
+
+                                ${
+                                    note.link
+                                    ?
+                                    `
+                                    <button
+                                        class="btn secondary"
+                                        onclick="openLink('${encodeURIComponent(note.link)}')"
+                                    >
+                                        🔗 Open
+                                    </button>
+                                    `
+                                    :
+                                    ""
+                                }
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+            ).join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =================================
+   READ NOTE
+================================= */
+
+function readNote(id){
+
+    const note =
+        notes.find(
+            function(n){
+                return n.id == id;
+            }
+        );
+
+
+    if(!note){
+        return;
+    }
+
+
+    localStorage.setItem(
+        "AS_MODEL_CURRENT_NOTE",
+        JSON.stringify(note)
+    );
+
+
+    location.href =
+        "read-note.html";
+
+}
+
+
+/* =================================
+   OPEN FILE
+================================= */
+
+function openFile(encoded){
+
+    const file =
+        decodeURIComponent(encoded);
+
+    window.open(
+        file,
+        "_blank"
+    );
+
+}
+
+
+/* =================================
+   OPEN LINK
+================================= */
+
+function openLink(encoded){
+
+    const link =
+        decodeURIComponent(encoded);
+
+    window.open(
+        link,
+        "_blank"
+    );
+
+}
+
+
+/* =================================
+   SECURITY
+================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(/&/g,"&amp;")
+
+        .replace(/</g,"&lt;")
+
+        .replace(/>/g,"&gt;")
+
+        .replace(/"/g,"&quot;")
+
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =================================
+   START
+================================= */
+
+renderNotes();
+
+</script>
+
+</body>
+</html>

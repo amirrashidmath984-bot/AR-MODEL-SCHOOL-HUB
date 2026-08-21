@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AS MODEL • Gallery</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+/* HEADER */
+
+header{
+    height:68px;
+    padding:0 5%;
+
+    background:white;
+
+    border-bottom:1px solid #e2e8f0;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    position:sticky;
+    top:0;
+
+    z-index:1000;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:12px;
+
+    color:white;
+    font-weight:900;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+}
+
+.brand h2{
+    font-size:15px;
+}
+
+.brand span{
+    display:block;
+
+    color:#64748b;
+
+    font-size:9px;
+
+    margin-top:3px;
+}
+
+.back{
+    border:0;
+
+    padding:10px 14px;
+
+    border-radius:10px;
+
+    background:#e2e8f0;
+
+    color:#0f172a;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+
+/* CONTAINER */
+
+.container{
+    width:94%;
+    max-width:1150px;
+
+    margin:30px auto 70px;
+}
+
+
+/* HERO */
+
+.hero{
+
+    padding:35px;
+
+    border-radius:23px;
+
+    color:white;
+
+    margin-bottom:22px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #0f172a,
+        #312e81
+    );
+}
+
+.hero h1{
+
+    font-size:30px;
+
+    margin-bottom:8px;
+}
+
+.hero p{
+
+    color:#cbd5e1;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* CONTROLS */
+
+.controls{
+
+    background:white;
+
+    border:1px solid #e2e8f0;
+
+    border-radius:17px;
+
+    padding:16px;
+
+    margin-bottom:22px;
+}
+
+.controlsGrid{
+
+    display:grid;
+
+    grid-template-columns:
+    1fr 1fr;
+
+    gap:10px;
+}
+
+label{
+
+    display:block;
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+}
+
+input,
+select{
+
+    width:100%;
+
+    height:44px;
+
+    padding:0 12px;
+
+    border:
+    1px solid #e2e8f0;
+
+    border-radius:10px;
+
+    outline:none;
+
+    font-size:11px;
+}
+
+input:focus,
+select:focus{
+
+    border-color:#2563eb;
+
+    box-shadow:
+    0 0 0 3px
+    rgba(37,99,235,.08);
+}
+
+
+/* GALLERY */
+
+.gallery{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,1fr);
+
+    gap:15px;
+}
+
+.photoCard{
+
+    background:white;
+
+    border:
+    1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    overflow:hidden;
+
+    transition:.25s;
+}
+
+.photoCard:hover{
+
+    transform:
+    translateY(-5px);
+
+    box-shadow:
+    0 15px 35px
+    rgba(15,23,42,.1);
+
+    border-color:#bfdbfe;
+}
+
+.photo{
+
+    width:100%;
+
+    height:210px;
+
+    object-fit:cover;
+
+    display:block;
+
+    background:#e2e8f0;
+
+    cursor:pointer;
+}
+
+.photoInfo{
+
+    padding:15px;
+}
+
+.photoInfo h3{
+
+    font-size:13px;
+
+    margin-bottom:6px;
+}
+
+.photoInfo p{
+
+    color:#64748b;
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+.photoSubject{
+
+    display:inline-block;
+
+    padding:5px 8px;
+
+    margin-bottom:8px;
+
+    border-radius:20px;
+
+    background:#eff6ff;
+
+    color:#2563eb;
+
+    font-size:8px;
+
+    font-weight:bold;
+}
+
+
+/* EMPTY */
+
+.empty{
+
+    grid-column:
+    1 / -1;
+
+    padding:60px 20px;
+
+    background:white;
+
+    border:
+    1px solid #e2e8f0;
+
+    border-radius:18px;
+
+    text-align:center;
+}
+
+.empty h2{
+
+    font-size:19px;
+
+    margin-bottom:8px;
+}
+
+.empty p{
+
+    color:#64748b;
+
+    font-size:10px;
+
+    line-height:1.6;
+}
+
+
+/* IMAGE VIEWER */
+
+.viewer{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:5000;
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:20px;
+
+    background:
+    rgba(2,6,23,.92);
+
+    backdrop-filter:blur(10px);
+}
+
+.viewer.show{
+
+    display:flex;
+}
+
+.viewerBox{
+
+    max-width:1000px;
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+.viewerImage{
+
+    max-width:100%;
+
+    max-height:78vh;
+
+    object-fit:contain;
+
+    border-radius:14px;
+
+    box-shadow:
+    0 20px 80px
+    rgba(0,0,0,.4);
+}
+
+.viewerTitle{
+
+    color:white;
+
+    font-size:15px;
+
+    margin-top:15px;
+}
+
+.viewerClose{
+
+    position:absolute;
+
+    right:22px;
+
+    top:20px;
+
+    width:40px;
+    height:40px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:
+    rgba(255,255,255,.12);
+
+    color:white;
+
+    font-size:23px;
+
+    cursor:pointer;
+}
+
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+    .gallery{
+
+        grid-template-columns:
+        repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .controlsGrid{
+
+        grid-template-columns:1fr;
+    }
+
+    .gallery{
+
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .hero{
+
+        padding:25px;
+    }
+
+    .hero h1{
+
+        font-size:25px;
+    }
+
+}
+
+@media(max-width:450px){
+
+    .gallery{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            AS
+        </div>
+
+        <div>
+
+            <h2>
+                AS MODEL
+            </h2>
+
+            <span>
+                Educational Gallery
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="back"
+        onclick="location.href='index.html'"
+    >
+        ← Home
+    </button>
+
+</header>
+
+
+
+<main class="container">
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <h1>
+        🖼️ Educational Gallery
+    </h1>
+
+    <p>
+        Explore educational photos, school activities,
+        diagrams and visual learning materials.
+    </p>
+
+</section>
+
+
+
+<!-- SEARCH -->
+
+<section class="controls">
+
+    <div class="controlsGrid">
+
+
+        <div>
+
+            <label>
+                Search Gallery
+            </label>
+
+            <input
+                id="search"
+                type="search"
+                placeholder="Search photo..."
+                oninput="renderGallery()"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Category
+            </label>
+
+            <select
+                id="category"
+                onchange="renderGallery()"
+            >
+
+                <option value="All">
+                    All Categories
+                </option>
+
+                <option value="School">
+                    School
+                </option>
+
+                <option value="Biology">
+                    Biology
+                </option>
+
+                <option value="Chemistry">
+                    Chemistry
+                </option>
+
+                <option value="Physics">
+                    Physics
+                </option>
+
+                <option value="Mathematics">
+                    Mathematics
+                </option>
+
+                <option value="General">
+                    General
+                </option>
+
+            </select>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- GALLERY -->
+
+<section
+    class="gallery"
+    id="gallery"
+></section>
+
+
+</main>
+
+
+
+<!-- IMAGE VIEWER -->
+
+<div
+    class="viewer"
+    id="viewer"
+>
+
+    <button
+        class="viewerClose"
+        onclick="closeViewer()"
+    >
+        ×
+    </button>
+
+
+    <div class="viewerBox">
+
+        <img
+            id="viewerImage"
+            class="viewerImage"
+            src=""
+            alt="Gallery image"
+        >
+
+
+        <div
+            id="viewerTitle"
+            class="viewerTitle"
+        ></div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================
+   LOAD GALLERY
+========================================= */
+
+let galleryData =
+    JSON.parse(
+        localStorage.getItem(
+            "AS_MODEL_GALLERY"
+        )
+    ) || [];
+
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderGallery(){
+
+    galleryData =
+        JSON.parse(
+            localStorage.getItem(
+                "AS_MODEL_GALLERY"
+            )
+        ) || [];
+
+
+    const gallery =
+        document.getElementById(
+            "gallery"
+        );
+
+
+    const search =
+        document.getElementById(
+            "search"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const category =
+        document.getElementById(
+            "category"
+        ).value;
+
+
+    const filtered =
+        galleryData.filter(
+            function(item){
+
+                const matchesCategory =
+                    category === "All" ||
+                    item.category === category;
+
+
+                const searchable =
+                    (
+                        item.title +
+                        " " +
+                        item.description
+                    )
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    searchable.includes(
+                        search
+                    );
+
+
+                return (
+                    matchesCategory &&
+                    matchesSearch
+                );
+
+            }
+        );
+
+
+    if(filtered.length === 0){
+
+        gallery.innerHTML = `
+
+            <div class="empty">
+
+                <h2>
+                    📭 Gallery Empty
+                </h2>
+
+                <p>
+                    No images found.
+                    Add photos from developer.html.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    gallery.innerHTML =
+        filtered
+        .map(
+            function(item){
+
+                return `
+
+                <article
+                    class="photoCard"
+                >
+
+                    <img
+                        class="photo"
+                        src="${safeImage(
+                            item.image
+                        )}"
+                        alt="${escapeHTML(
+                            item.title
+                        )}"
+                        loading="lazy"
+                        onclick="openViewer(
+                            '${safeJS(item.image)}',
+                            '${safeJS(item.title)}'
+                        )"
+                    >
+
+
+                    <div class="photoInfo">
+
+                        <span
+                            class="photoSubject"
+                        >
+                            ${escapeHTML(
+                                item.category
+                            )}
+                        </span>
+
+
+                        <h3>
+                            ${escapeHTML(
+                                item.title
+                            )}
+                        </h3>
+
+
+                        <p>
+                            ${escapeHTML(
+                                item.description ||
+                                "Educational image."
+                            )}
+                        </p>
+
+                    </div>
+
+                </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+
+/* =========================================
+   IMAGE VIEWER
+========================================= */
+
+function openViewer(
+    image,
+    title
+){
+
+    const viewer =
+        document.getElementById(
+            "viewer"
+        );
+
+
+    document.getElementById(
+        "viewerImage"
+    ).src =
+        image;
+
+
+    document.getElementById(
+        "viewerTitle"
+    ).textContent =
+        title;
+
+
+    viewer.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeViewer(){
+
+    document.getElementById(
+        "viewer"
+    )
+    .classList.remove(
+        "show"
+    );
+
+}
+
+
+document
+.getElementById("viewer")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeViewer();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   SAFETY
+========================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function safeJS(text){
+
+    return String(text || "")
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        );
+
+}
+
+
+function safeImage(url){
+
+    return String(
+        url || ""
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+renderGallery();
+
+</script>
+
+</body>
+</html>
