@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AS MODEL • Digital Library</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+header{
+    height:68px;
+    padding:0 5%;
+    background:#fff;
+    border-bottom:1px solid #e2e8f0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:900;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.brand h2{
+    font-size:15px;
+}
+
+.brand span{
+    display:block;
+    color:#64748b;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.back{
+    background:#e2e8f0;
+    color:#0f172a;
+}
+
+.container{
+    width:94%;
+    max-width:1100px;
+    margin:30px auto 70px;
+}
+
+.hero{
+    padding:32px;
+    border-radius:22px;
+    color:white;
+    margin-bottom:20px;
+    background:linear-gradient(135deg,#0f172a,#312e81);
+}
+
+.hero h1{
+    font-size:29px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#cbd5e1;
+    font-size:11px;
+    line-height:1.7;
+}
+
+.tools{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:17px;
+    padding:16px;
+    margin-bottom:20px;
+}
+
+.toolsGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+label{
+    display:block;
+    font-size:10px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+select{
+    width:100%;
+    height:44px;
+    border:1px solid #e2e8f0;
+    border-radius:10px;
+    outline:none;
+    padding:0 12px;
+    font-size:11px;
+}
+
+input:focus,
+select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
+}
+
+.libraryGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+.book{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    padding:20px;
+    transition:.2s;
+}
+
+.book:hover{
+    transform:translateY(-4px);
+    border-color:#bfdbfe;
+    box-shadow:0 15px 35px rgba(15,23,42,.08);
+}
+
+.bookCover{
+    height:150px;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
+    margin-bottom:15px;
+    color:white;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.subject{
+    display:inline-block;
+    padding:5px 8px;
+    border-radius:20px;
+    background:#eff6ff;
+    color:#2563eb;
+    font-size:8px;
+    font-weight:bold;
+    margin-bottom:9px;
+}
+
+.book h2{
+    font-size:14px;
+    line-height:1.4;
+    margin-bottom:7px;
+}
+
+.book p{
+    color:#64748b;
+    font-size:10px;
+    line-height:1.6;
+    min-height:45px;
+}
+
+.actions{
+    display:flex;
+    gap:7px;
+    margin-top:15px;
+}
+
+.openBtn{
+    flex:1;
+    color:white;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.infoBtn{
+    background:#e2e8f0;
+    color:#334155;
+}
+
+.empty{
+    grid-column:1/-1;
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    text-align:center;
+    padding:55px 20px;
+}
+
+.empty h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.empty p{
+    color:#64748b;
+    font-size:10px;
+    line-height:1.6;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:5000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    background:rgba(2,6,23,.78);
+    backdrop-filter:blur(10px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modalCard{
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:22px;
+    padding:25px;
+}
+
+.modalTop{
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.modalTop h2{
+    font-size:21px;
+}
+
+.close{
+    border:0;
+    width:35px;
+    height:35px;
+    border-radius:9px;
+    background:#f1f5f9;
+    cursor:pointer;
+    font-size:18px;
+}
+
+.infoRow{
+    padding:12px 0;
+    border-bottom:1px solid #e2e8f0;
+}
+
+.infoRow strong{
+    display:block;
+    font-size:10px;
+    margin-bottom:5px;
+}
+
+.infoRow span{
+    color:#64748b;
+    font-size:11px;
+    line-height:1.6;
+}
+
+@media(max-width:850px){
+    .libraryGrid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .toolsGrid{
+        grid-template-columns:1fr;
+    }
+
+    .libraryGrid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:24px;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            AS
+        </div>
+
+        <div>
+            <h2>AS MODEL</h2>
+            <span>Digital Library</span>
+        </div>
+
+    </div>
+
+    <button
+        class="btn back"
+        onclick="location.href='index.html'"
+    >
+        ← Home
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <h1>
+            📚 Digital Library
+        </h1>
+
+        <p>
+            Find textbooks, PDFs and other educational
+            resources uploaded through the developer dashboard.
+        </p>
+
+    </section>
+
+
+    <section class="tools">
+
+        <div class="toolsGrid">
+
+            <div>
+
+                <label>
+                    Search Books
+                </label>
+
+                <input
+                    id="search"
+                    type="search"
+                    placeholder="Search book title..."
+                    oninput="renderBooks()"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Subject
+                </label>
+
+                <select
+                    id="subject"
+                    onchange="renderBooks()"
+                >
+
+                    <option value="All">
+                        All Subjects
+                    </option>
+
+                    <option value="Biology">
+                        Biology
+                    </option>
+
+                    <option value="Chemistry">
+                        Chemistry
+                    </option>
+
+                    <option value="Physics">
+                        Physics
+                    </option>
+
+                    <option value="Mathematics">
+                        Mathematics
+                    </option>
+
+                    <option value="English">
+                        English
+                    </option>
+
+                    <option value="General">
+                        General
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section
+        class="libraryGrid"
+        id="libraryGrid"
+    ></section>
+
+</main>
+
+
+<!-- BOOK INFO -->
+
+<div
+    class="modal"
+    id="infoModal"
+>
+
+    <div class="modalCard">
+
+        <div class="modalTop">
+
+            <h2 id="infoTitle">
+                Book Information
+            </h2>
+
+            <button
+                class="close"
+                onclick="closeInfo()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="infoRow">
+
+            <strong>
+                Subject
+            </strong>
+
+            <span id="infoSubject"></span>
+
+        </div>
+
+        <div class="infoRow">
+
+            <strong>
+                Description
+            </strong>
+
+            <span id="infoDescription"></span>
+
+        </div>
+
+        <div class="infoRow">
+
+            <strong>
+                Resource Type
+            </strong>
+
+            <span id="infoType"></span>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   LIBRARY DATA
+========================================= */
+
+let books =
+    JSON.parse(
+        localStorage.getItem(
+            "AS_MODEL_LIBRARY"
+        )
+    ) || [];
+
+
+/* =========================================
+   RENDER BOOKS
+========================================= */
+
+function renderBooks(){
+
+    books =
+        JSON.parse(
+            localStorage.getItem(
+                "AS_MODEL_LIBRARY"
+            )
+        ) || [];
+
+
+    const grid =
+        document.getElementById(
+            "libraryGrid"
+        );
+
+
+    const search =
+        document.getElementById(
+            "search"
+        )
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const subject =
+        document.getElementById(
+            "subject"
+        ).value;
+
+
+    const filtered =
+        books.filter(
+            function(book){
+
+                const matchesSubject =
+                    subject === "All" ||
+                    book.subject === subject;
+
+
+                const searchable =
+                    (
+                        book.title +
+                        " " +
+                        book.description
+                    )
+                    .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    searchable.includes(
+                        search
+                    );
+
+
+                return (
+                    matchesSubject &&
+                    matchesSearch
+                );
+
+            }
+        );
+
+
+    if(filtered.length === 0){
+
+        grid.innerHTML = `
+
+            <div class="empty">
+
+                <h2>
+                    📭 No Books Found
+                </h2>
+
+                <p>
+                    No library resource is available for
+                    your current search. Add books or PDFs
+                    from developer.html.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    grid.innerHTML =
+        filtered
+        .map(
+            function(book){
+
+                return `
+
+                <article class="book">
+
+                    <div class="bookCover">
+                        ${getIcon(book.subject)}
+                    </div>
+
+                    <span class="subject">
+                        ${escapeHTML(book.subject)}
+                    </span>
+
+                    <h2>
+                        ${escapeHTML(book.title)}
+                    </h2>
+
+                    <p>
+                        ${escapeHTML(
+                            book.description ||
+                            "Educational resource."
+                        )}
+                    </p>
+
+                    <div class="actions">
+
+                        <button
+                            class="btn openBtn"
+                            onclick="openBook(${book.id})"
+                        >
+                            📖 Open
+                        </button>
+
+                        <button
+                            class="btn infoBtn"
+                            onclick="showInfo(${book.id})"
+                        >
+                            ℹ️
+                        </button>
+
+                    </div>
+
+                </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   OPEN BOOK
+========================================= */
+
+function openBook(id){
+
+    const book =
+        books.find(
+            function(b){
+                return b.id == id;
+            }
+        );
+
+
+    if(!book){
+        return;
+    }
+
+
+    if(!book.url){
+
+        alert(
+            "This resource does not have a PDF or book link yet."
+        );
+
+        return;
+
+    }
+
+
+    if(
+        /^https?:\/\//i.test(
+            book.url
+        )
+    ){
+
+        window.open(
+            book.url,
+            "_blank"
+        );
+
+    }else{
+
+        window.location.href =
+            book.url;
+
+    }
+
+}
+
+
+/* =========================================
+   SHOW INFO
+========================================= */
+
+function showInfo(id){
+
+    const book =
+        books.find(
+            function(b){
+                return b.id == id;
+            }
+        );
+
+
+    if(!book){
+        return;
+    }
+
+
+    document.getElementById(
+        "infoTitle"
+    ).textContent =
+        book.title;
+
+
+    document.getElementById(
+        "infoSubject"
+    ).textContent =
+        book.subject;
+
+
+    document.getElementById(
+        "infoDescription"
+    ).textContent =
+        book.description ||
+        "No description available.";
+
+
+    document.getElementById(
+        "infoType"
+    ).textContent =
+        book.type ||
+        "Educational Resource";
+
+
+    document.getElementById(
+        "infoModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================
+   CLOSE INFO
+========================================= */
+
+function closeInfo(){
+
+    document.getElementById(
+        "infoModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+document
+.getElementById("infoModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeInfo();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ICONS
+========================================= */
+
+function getIcon(subject){
+
+    const icons = {
+
+        Biology:"🧬",
+
+        Chemistry:"⚗️",
+
+        Physics:"⚡",
+
+        Mathematics:"📐",
+
+        English:"📖",
+
+        General:"📚"
+
+    };
+
+
+    return icons[subject] || "📚";
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+renderBooks();
+
+</script>
+
+</body>
+</html>

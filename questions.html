@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>AS MODEL • Questions</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+header{
+    height:68px;
+    padding:0 5%;
+    background:white;
+    border-bottom:1px solid #e2e8f0;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-weight:900;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.brand h2{
+    font-size:15px;
+}
+
+.brand span{
+    display:block;
+    color:#64748b;
+    font-size:9px;
+    margin-top:3px;
+}
+
+.btn{
+    border:0;
+    border-radius:10px;
+    padding:10px 14px;
+    cursor:pointer;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.back{
+    background:#e2e8f0;
+    color:#0f172a;
+}
+
+.container{
+    width:94%;
+    max-width:1000px;
+    margin:30px auto 70px;
+}
+
+.hero{
+    background:
+    linear-gradient(135deg,#0f172a,#312e81);
+    color:white;
+    padding:30px;
+    border-radius:22px;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.hero p{
+    color:#cbd5e1;
+    font-size:11px;
+    line-height:1.7;
+}
+
+.controls{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:17px;
+    padding:17px;
+    margin-bottom:20px;
+}
+
+.controlsGrid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+label{
+    display:block;
+    font-size:10px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+select{
+    width:100%;
+    height:43px;
+    border:1px solid #e2e8f0;
+    border-radius:9px;
+    padding:0 10px;
+    outline:none;
+}
+
+.question{
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    padding:22px;
+    margin-bottom:14px;
+}
+
+.qTop{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+}
+
+.qNumber{
+    font-size:10px;
+    font-weight:bold;
+    color:#2563eb;
+}
+
+.qSubject{
+    font-size:9px;
+    color:#64748b;
+    background:#f1f5f9;
+    padding:5px 8px;
+    border-radius:20px;
+}
+
+.questionText{
+    font-size:14px;
+    line-height:1.7;
+    margin-bottom:17px;
+    font-weight:bold;
+}
+
+.options{
+    display:grid;
+    gap:9px;
+}
+
+.option{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    padding:12px;
+    border:1px solid #e2e8f0;
+    border-radius:11px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:#93c5fd;
+    background:#eff6ff;
+}
+
+.option input{
+    margin-top:3px;
+}
+
+.optionLetter{
+    width:23px;
+    height:23px;
+    min-width:23px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:7px;
+    color:white;
+    background:#2563eb;
+    font-size:9px;
+    font-weight:bold;
+}
+
+.optionText{
+    font-size:11px;
+    line-height:1.5;
+}
+
+.submitBox{
+    position:sticky;
+    bottom:10px;
+    z-index:20;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(12px);
+    border:1px solid #e2e8f0;
+    border-radius:17px;
+    padding:13px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.submit{
+    color:white;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+}
+
+.result{
+    display:none;
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:20px;
+    padding:25px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.result.show{
+    display:block;
+}
+
+.score{
+    font-size:42px;
+    font-weight:900;
+    margin:10px 0;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.result p{
+    color:#64748b;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.empty{
+    text-align:center;
+    padding:50px 20px;
+    background:white;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+}
+
+.empty h2{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.empty p{
+    color:#64748b;
+    font-size:10px;
+}
+
+.correct{
+    border-color:#86efac !important;
+    background:#f0fdf4 !important;
+}
+
+.wrong{
+    border-color:#fca5a5 !important;
+    background:#fef2f2 !important;
+}
+
+@media(max-width:650px){
+
+    .controlsGrid{
+        grid-template-columns:1fr;
+    }
+
+    .hero{
+        padding:23px;
+    }
+
+    .hero h1{
+        font-size:24px;
+    }
+
+    .question{
+        padding:17px;
+    }
+
+    .submitBox{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="brand">
+
+        <div class="logo">
+            AS
+        </div>
+
+        <div>
+            <h2>AS MODEL</h2>
+            <span>Question Practice</span>
+        </div>
+
+    </div>
+
+    <button
+        class="btn back"
+        onclick="location.href='index.html'"
+    >
+        ← Home
+    </button>
+
+</header>
+
+
+<main class="container">
+
+    <section class="hero">
+
+        <h1>
+            🎯 Practice Questions
+        </h1>
+
+        <p>
+            Choose your subject and test your knowledge.
+            Questions added from the Developer Dashboard
+            will appear automatically here.
+        </p>
+
+    </section>
+
+
+    <section class="controls">
+
+        <div class="controlsGrid">
+
+            <div>
+
+                <label>
+                    Subject
+                </label>
+
+                <select
+                    id="subjectFilter"
+                    onchange="loadQuestions()"
+                >
+
+                    <option value="All">
+                        All Subjects
+                    </option>
+
+                    <option value="Biology">
+                        Biology
+                    </option>
+
+                    <option value="Chemistry">
+                        Chemistry
+                    </option>
+
+                    <option value="Physics">
+                        Physics
+                    </option>
+
+                    <option value="Mathematics">
+                        Mathematics
+                    </option>
+
+                    <option value="English">
+                        English
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Number of Questions
+                </label>
+
+                <select
+                    id="questionLimit"
+                    onchange="loadQuestions()"
+                >
+
+                    <option value="10">
+                        10 Questions
+                    </option>
+
+                    <option value="20">
+                        20 Questions
+                    </option>
+
+                    <option value="30">
+                        30 Questions
+                    </option>
+
+                    <option value="50">
+                        50 Questions
+                    </option>
+
+                    <option value="100">
+                        100 Questions
+                    </option>
+
+                    <option value="all">
+                        All Questions
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section
+        class="result"
+        id="result"
+    >
+
+        <div>
+            🏆
+        </div>
+
+        <h2>
+            Your Result
+        </h2>
+
+        <div
+            class="score"
+            id="score"
+        >
+            0%
+        </div>
+
+        <p id="resultText">
+            Complete the questions to see your result.
+        </p>
+
+        <br>
+
+        <button
+            class="btn submit"
+            onclick="loadQuestions()"
+        >
+            🔄 Try Again
+        </button>
+
+    </section>
+
+
+    <div id="questionContainer"></div>
+
+
+    <div
+        class="submitBox"
+        id="submitBox"
+    >
+
+        <span
+            id="questionCount"
+            style="font-size:10px;color:#64748b;"
+        >
+            0 Questions
+        </span>
+
+        <button
+            class="btn submit"
+            onclick="submitQuiz()"
+        >
+            ✅ Submit Answers
+        </button>
+
+    </div>
+
+</main>
+
+
+<script>
+
+/* =========================================
+   GET QUESTIONS FROM DEVELOPER PAGE
+========================================= */
+
+let allQuestions =
+    JSON.parse(
+        localStorage.getItem(
+            "AS_MODEL_QUESTIONS"
+        )
+    ) || [];
+
+
+let currentQuestions = [];
+
+
+/* =========================================
+   LOAD QUESTIONS
+========================================= */
+
+function loadQuestions(){
+
+    allQuestions =
+        JSON.parse(
+            localStorage.getItem(
+                "AS_MODEL_QUESTIONS"
+            )
+        ) || [];
+
+
+    const subject =
+        document.getElementById(
+            "subjectFilter"
+        ).value;
+
+
+    const limit =
+        document.getElementById(
+            "questionLimit"
+        ).value;
+
+
+    let filtered =
+        subject === "All"
+        ?
+        [...allQuestions]
+        :
+        allQuestions.filter(
+            q =>
+                q.subject === subject
+        );
+
+
+    /*
+       Shuffle questions
+    */
+
+    filtered =
+        shuffle(
+            filtered
+        );
+
+
+    if(limit !== "all"){
+
+        filtered =
+            filtered.slice(
+                0,
+                Number(limit)
+            );
+
+    }
+
+
+    currentQuestions =
+        filtered;
+
+
+    renderQuestions();
+
+
+    document
+    .getElementById("result")
+    .classList.remove("show");
+
+}
+
+
+/* =========================================
+   RENDER
+========================================= */
+
+function renderQuestions(){
+
+    const container =
+        document.getElementById(
+            "questionContainer"
+        );
+
+
+    const count =
+        document.getElementById(
+            "questionCount"
+        );
+
+
+    if(currentQuestions.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h2>
+                    📭 No Questions Found
+                </h2>
+
+                <p>
+                    There are no questions for this
+                    subject yet. Add questions from
+                    developer.html.
+                </p>
+
+            </div>
+
+        `;
+
+        count.textContent =
+            "0 Questions";
+
+        document
+        .getElementById(
+            "submitBox"
+        )
+        .style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    document
+    .getElementById(
+        "submitBox"
+    )
+    .style.display =
+        "flex";
+
+
+    count.textContent =
+        currentQuestions.length +
+        " Questions";
+
+
+    container.innerHTML =
+        currentQuestions
+        .map(
+            function(q,index){
+
+                return `
+
+                <article
+                    class="question"
+                    id="question-${index}"
+                >
+
+                    <div class="qTop">
+
+                        <span class="qNumber">
+                            QUESTION ${index + 1}
+                        </span>
+
+                        <span class="qSubject">
+                            ${escapeHTML(q.subject)}
+                        </span>
+
+                    </div>
+
+
+                    <div class="questionText">
+                        ${escapeHTML(q.question)}
+                    </div>
+
+
+                    <div class="options">
+
+                        ${createOption(
+                            index,
+                            "A",
+                            q.options.A
+                        )}
+
+                        ${createOption(
+                            index,
+                            "B",
+                            q.options.B
+                        )}
+
+                        ${createOption(
+                            index,
+                            "C",
+                            q.options.C
+                        )}
+
+                        ${createOption(
+                            index,
+                            "D",
+                            q.options.D
+                        )}
+
+                    </div>
+
+                </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+}
+
+
+/* =========================================
+   OPTION
+========================================= */
+
+function createOption(
+    questionIndex,
+    letter,
+    text
+){
+
+    return `
+
+        <label
+            class="option"
+            id="option-${questionIndex}-${letter}"
+        >
+
+            <input
+                type="radio"
+                name="question-${questionIndex}"
+                value="${letter}"
+            >
+
+            <span class="optionLetter">
+                ${letter}
+            </span>
+
+            <span class="optionText">
+                ${escapeHTML(text)}
+            </span>
+
+        </label>
+
+    `;
+
+}
+
+
+/* =========================================
+   SUBMIT QUIZ
+========================================= */
+
+function submitQuiz(){
+
+    if(
+        currentQuestions.length === 0
+    ){
+
+        return;
+
+    }
+
+
+    let score = 0;
+
+    let answered = 0;
+
+
+    currentQuestions.forEach(
+        function(q,index){
+
+            const selected =
+                document.querySelector(
+                    `input[name="question-${index}"]:checked`
+                );
+
+
+            if(selected){
+
+                answered++;
+
+                if(
+                    selected.value ===
+                    q.answer
+                ){
+
+                    score++;
+
+                    document
+                    .getElementById(
+                        `option-${index}-${selected.value}`
+                    )
+                    .classList.add(
+                        "correct"
+                    );
+
+                }else{
+
+                    document
+                    .getElementById(
+                        `option-${index}-${selected.value}`
+                    )
+                    .classList.add(
+                        "wrong"
+                    );
+
+
+                    document
+                    .getElementById(
+                        `option-${index}-${q.answer}`
+                    )
+                    .classList.add(
+                        "correct"
+                    );
+
+                }
+
+            }else{
+
+                /*
+                   Show correct answer
+                */
+
+                document
+                .getElementById(
+                    `option-${index}-${q.answer}`
+                )
+                .classList.add(
+                    "correct"
+                );
+
+            }
+
+        }
+    );
+
+
+    const percentage =
+        Math.round(
+            (score /
+            currentQuestions.length)
+            * 100
+        );
+
+
+    document
+    .getElementById(
+        "score"
+    )
+    .textContent =
+        percentage + "%";
+
+
+    document
+    .getElementById(
+        "resultText"
+    )
+    .textContent =
+        "You answered " +
+        answered +
+        " of " +
+        currentQuestions.length +
+        " questions. Correct answers: " +
+        score +
+        ".";
+
+
+    document
+    .getElementById(
+        "result"
+    )
+    .classList.add(
+        "show"
+    );
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+}
+
+
+/* =========================================
+   SHUFFLE
+========================================= */
+
+function shuffle(array){
+
+    const copy =
+        [...array];
+
+
+    for(
+        let i=copy.length-1;
+        i>0;
+        i--
+    ){
+
+        const j =
+            Math.floor(
+                Math.random() *
+                (i+1)
+            );
+
+
+        [
+            copy[i],
+            copy[j]
+        ] =
+        [
+            copy[j],
+            copy[i]
+        ];
+
+    }
+
+
+    return copy;
+
+}
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(text){
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+loadQuestions();
+
+</script>
+
+</body>
+</html>
